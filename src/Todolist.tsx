@@ -1,6 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterValueType} from "./App";
-import {Simulate} from "react-dom/test-utils";
 
 
 type TodoListProps = {
