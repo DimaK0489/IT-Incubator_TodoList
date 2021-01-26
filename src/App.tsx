@@ -17,28 +17,38 @@ function App() {
         {id: v1(), title: "ANGULAR", isDone: false},
 
     ])
-    function removeTask(id:string){
-        let filterTask = tasks.filter( t => t.id !== id)
+
+    function removeTask(id: string) {
+        let filterTask = tasks.filter(t => t.id !== id)
         setTasks(filterTask);
     }
-    function addTask(title: string){
-        let task ={id:v1(), title: title, isDone: false}
+
+    function addTask(title: string) {
+        let task = {id: v1(), title: title, isDone: false}
         let newTask = [task, ...tasks]
         setTasks(newTask)
     }
 
-    let [filter, setFilter] = useState<FilterValueType>("all")
-    let tasksForTodolist = tasks
-    if(filter === "active"){
-        tasksForTodolist = tasks.filter( t => t.isDone === false)
-    }
-    if(filter === "completed"){
-        tasksForTodolist = tasks.filter( t => t.isDone === true)
-    }
-    function changeFilter(value: FilterValueType){
+    function changeFilter(value: FilterValueType) {
         setFilter(value)
     }
 
+    function changeStatus(taskID: string, isDone: boolean) {
+        const task = tasks.find(t => t.id === taskID)
+        if (task) {
+            task.isDone = isDone
+        }
+        setTasks([...tasks])
+    }
+
+    let [filter, setFilter] = useState<FilterValueType>("all")
+    let tasksForTodolist = tasks
+    if (filter === "active") {
+        tasksForTodolist = tasks.filter(t => t.isDone === false)
+    }
+    if (filter === "completed") {
+        tasksForTodolist = tasks.filter(t => t.isDone === true)
+    }
     return (
         <div className="App">
             <TodoList value={"What to Learn"}
@@ -46,6 +56,8 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      changeStatus={changeStatus}
+                      filter={filter}
             />
         </div>
     );
