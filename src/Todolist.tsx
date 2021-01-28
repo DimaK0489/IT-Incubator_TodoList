@@ -47,7 +47,22 @@ export function TodoList(props: TodoListProps) {
     const onCompletedClickHandler = () => {
         props.changeFilter("completed")
     }
-
+    const tasks = props.tasks.map(t => {
+        const onRemoveHandler = () => {
+            props.removeTask(t.id)
+        }
+        const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+            props.changeStatus(t.id, e.currentTarget.checked)
+        }
+        return <li key={t.id} className={t.isDone ? "is-done" : ""}>
+            <input type="checkbox"
+                   checked={t.isDone}
+                   onChange={onChangeHandler}
+            />
+            <span>{t.title}</span>
+            <button onClick={onRemoveHandler}>Delete</button>
+        </li>
+    })
     return (
         <div>
             <h3>{props.value}</h3>
@@ -60,24 +75,9 @@ export function TodoList(props: TodoListProps) {
                 <button onClick={addTask}>+</button>
                 {error && <div className={"error-message"}>{error}</div>}
             </div>
+
             <ul>
-                {props.tasks.map(t => {
-                    const onRemoveHandler = () => {
-                        props.removeTask(t.id)
-                    }
-                    const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
-                        props.changeStatus(t.id, e.currentTarget.checked)
-                    }
-                    return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <input type="checkbox"
-                               checked={t.isDone}
-                               onChange={onChangeHandler}
-                        />
-                        <span>{t.title}</span>
-                        <button onClick={onRemoveHandler}>Delete</button>
-                    </li>
-                })
-                }
+                {tasks}
             </ul>
             <div>
                 <button className={ props.filter === "all" ? "active-filter": ""} onClick={onAllClickHandler}>All</button>

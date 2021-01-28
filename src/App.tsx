@@ -22,17 +22,14 @@ function App() {
         let filterTask = tasks.filter(t => t.id !== id)
         setTasks(filterTask);
     }
-
     function addTask(title: string) {
         let task = {id: v1(), title: title, isDone: false}
         let newTask = [task, ...tasks]
         setTasks(newTask)
     }
-
     function changeFilter(value: FilterValueType) {
         setFilter(value)
     }
-
     function changeStatus(taskID: string, isDone: boolean) {
         const task = tasks.find(t => t.id === taskID)
         if (task) {
