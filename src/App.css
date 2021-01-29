@@ -7,7 +7,7 @@
   margin-right: 50px;
 }
 .error {
-  border: red 1px solid;
+  border: 2px solid red;
 }
 
 .error-message {
@@ -15,6 +15,7 @@
 }
 .active-filter {
   background-color: aquamarine;
+  outline: none;
 }
 .is-done {
   opacity: 0.5;
