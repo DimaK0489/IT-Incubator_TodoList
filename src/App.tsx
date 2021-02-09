@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {TasksType, TodoList} from "./Todolist";
 import {v1} from "uuid";
+import {AddItemForm} from "./AddItemForm";
 
 type TodoListType = {
     id: string
@@ -48,14 +49,12 @@ function App() {
         tasks[todolistID] = todolistTasks.filter(t => t.id !== id)
         setTasks({...tasks});
     }
-
     function addTask(title: string, todolistID: string) {
         const newTask = {id: v1(), title: title, isDone: false}
         const todolistTasks = tasks[todolistID]
         tasks[todolistID] = [newTask, ...todolistTasks]
         setTasks({...tasks})
     }
-
     function changeFilter(value: FilterValueType, todolistID: string) {
         const todolist = todoLists.find(t => t.id === todolistID)
         if (todolist) {
@@ -64,7 +63,6 @@ function App() {
         }
 
     }
-
     function changeStatus(taskID: string, isDone: boolean, todolistID: string) {
         const todoListTasks = tasks[todolistID]
         const task= todoListTasks.find(t => t.id === taskID)
@@ -78,10 +76,17 @@ function App() {
         delete tasks[todolistID]
         setTasks({...tasks})
     }
-
+    function addTodoList(title: string) {
+        const newTodoListID = v1()
+        const newTodoList: TodoListType = {
+            id: newTodoListID, title: title, filter: "all"
+        }
+        setTodoList([newTodoList, ...todoLists])
+        setTasks({...tasks, [newTodoListID]: []})
+    }
     return (
-
         <div className="App">
+            <AddItemForm addItem={addTodoList}/>
             {
                 todoLists.map(t => {
                     let taskForTodolist = tasks[t.id]
@@ -91,7 +96,6 @@ function App() {
                     if(t.filter === "completed"){
                         taskForTodolist = tasks[t.id].filter(t=> t.isDone === true)
                     }
-
                     return (
                         <TodoList
                             key={t.id}
@@ -108,7 +112,6 @@ function App() {
                     )
                 })
             }
-
         </div>
     );
 }

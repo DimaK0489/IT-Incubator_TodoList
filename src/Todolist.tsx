@@ -1,5 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterValueType} from "./App";
+import {AddItemForm} from "./AddItemForm";
+import {EditTableSpan} from "./EditTableSpan";
 
 
 type TodoListProps = {
@@ -21,24 +23,8 @@ export type TasksType = {
 
 
 export function TodoList(props: TodoListProps) {
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTaskTitle(e.currentTarget.value)
-        setError(null)
-    }
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
-        if (e.key === "Enter") addTask();
-    }
-    const [newTaskTitle, setNewTaskTitle] = useState("")
-    const [error, setError] = useState<string | null>(null)
-    const addTask = () => {
-        if (newTaskTitle.trim() !== "") {
-            props.addTask(newTaskTitle.trim(), props.id);
-            setNewTaskTitle("");
-        } else {
-            setError("Title is required");
-        }
+    const addTask = (title: string) => {
+        props.addTask(title, props.id)
     }
     const onAllClickHandler = () => {
         props.changeFilter("all", props.id)
@@ -61,24 +47,19 @@ export function TodoList(props: TodoListProps) {
                    checked={t.isDone}
                    onChange={onChangeHandler}
             />
-            <span>{t.title}</span>
+            <EditTableSpan title={t.title}/>
             <button onClick={onRemoveHandler}>Delete</button>
         </li>
     })
     return (
         <div>
-            <h3>{props.value}<button onClick={()=>{props.removeTodolist(props.id)}}>Del</button></h3>
-            <div>
-                <input value={newTaskTitle}
-                       onChange={onChangeHandler}
-                       onKeyPress={onKeyPressHandler}
-                       className={error ? "error" : ""}
-
-                />
-                <button onClick={addTask}>+</button>
-                {error && <div className={"error-message"}>{error}</div>}
-            </div>
-
+            <h3>{props.value}
+                <button onClick={() => {
+                    props.removeTodolist(props.id)
+                }}>Del
+                </button>
+            </h3>
+            <AddItemForm addItem={addTask}/>
             <ul>
                 {tasks}
             </ul>
