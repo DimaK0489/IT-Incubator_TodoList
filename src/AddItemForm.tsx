@@ -10,18 +10,18 @@ export function AddItemForm(props: AddItemFormPropsType) {
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setNewTaskTitle(e.currentTarget.value)
-        setError(true)
+        setError(false)
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") addItem();
     }
-
     const addItem = () => {
-        if (newTaskTitle.trim() !== "") {
-            props.addItem(newTaskTitle);
-            setNewTaskTitle("");
+        let trimmedTitle = newTaskTitle.trim()
+        if (trimmedTitle !== "") {
+            props.addItem(trimmedTitle);
+            setNewTaskTitle("")
         } else {
-            setError(false);
+            setError(true);
         }
     }
     return(
@@ -30,7 +30,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
                    className={error ? "error" : ""}
-                   onBlur={() => setError(true)}
+                   onBlur={() => setError(false)}
             />
             <button onClick={addItem}>+</button>
             {error && <div className={"error-message"}>Title is required</div>}

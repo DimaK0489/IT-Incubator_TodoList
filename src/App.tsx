@@ -33,14 +33,14 @@ function App() {
             {id: v1(), title: "ANGULAR", isDone: false},
         ],
         [todolistID2]: [
-            {id: v1(), title: "HTML", isDone: true},
-            {id: v1(), title: "CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "REACT", isDone: true},
-            {id: v1(), title: "REDUX", isDone: false},
-            {id: v1(), title: "REST API", isDone: false},
-            {id: v1(), title: "GraphQL", isDone: false},
-            {id: v1(), title: "ANGULAR", isDone: false},
+            {id: v1(), title: "Milk", isDone: true},
+            {id: v1(), title: "Beef", isDone: true},
+            {id: v1(), title: "Meet", isDone: true},
+            {id: v1(), title: "Bred", isDone: true},
+            {id: v1(), title: "Vegetables", isDone: false},
+            {id: v1(), title: "Ags", isDone: false},
+            {id: v1(), title: "Water", isDone: false},
+            {id: v1(), title: "Jus", isDone: false},
         ]
     })
 
@@ -71,6 +71,14 @@ function App() {
             setTasks({...tasks})
         }
     }
+    function changeTaskTitle(taskID: string, title: string, todolistID: string) {
+        const todoListTasks = tasks[todolistID]
+        const task= todoListTasks.find(t => t.id === taskID)
+        if (task) {
+            task.title = title
+            setTasks({...tasks})
+        }
+    }
     function removeTodolist(todolistID: string){
         setTodoList(todoLists.filter(t => t.id !== todolistID))
         delete tasks[todolistID]
@@ -83,6 +91,13 @@ function App() {
         }
         setTodoList([newTodoList, ...todoLists])
         setTasks({...tasks, [newTodoListID]: []})
+    }
+    function changeTodoListTitle(title: string, todolistID: string) {
+        const todoList = todoLists.find(tl => tl.id === todolistID)
+        if (todoList){
+            todoList.title = title
+            setTodoList([...todoLists])
+        }
     }
     return (
         <div className="App">
@@ -108,6 +123,8 @@ function App() {
                             addTask={addTask}
                             changeStatus={changeStatus}
                             removeTodolist={removeTodolist}
+                            changeTaskTitle={changeTaskTitle}
+                            changeTodoListTitle={changeTodoListTitle}
                         />
                     )
                 })
