@@ -3,7 +3,7 @@ import './App.css';
 import {TasksType, TodoList} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 
 type TodoListType = {
@@ -118,20 +118,21 @@ function App() {
             taskForTodolist = tasks[t.id].filter(t => t.isDone === true)
         }
         return (
-            <TodoList
-                key={t.id}
-                id={t.id}
-                value={t.title}
-                filter={t.filter}
-                tasks={taskForTodolist}
-                removeTask={removeTask}
-                changeFilter={changeFilter}
-                addTask={addTask}
-                changeStatus={changeStatus}
-                removeTodolist={removeTodolist}
-                changeTaskTitle={changeTaskTitle}
-                changeTodoListTitle={changeTodoListTitle}
-            />
+            <Grid item key={t.id} >
+                <Paper elevation={10} style={{padding: "20px"}}><TodoList
+                    id={t.id}
+                    value={t.title}
+                    filter={t.filter}
+                    tasks={taskForTodolist}
+                    removeTask={removeTask}
+                    changeFilter={changeFilter}
+                    addTask={addTask}
+                    changeStatus={changeStatus}
+                    removeTodolist={removeTodolist}
+                    changeTaskTitle={changeTaskTitle}
+                    changeTodoListTitle={changeTodoListTitle}
+                /></Paper>
+            </Grid>
         )
     })
 
@@ -149,8 +150,8 @@ function App() {
                 </Toolbar>
             </AppBar>
             <Container fixed>
-                <Grid container style={{padding: "7px"}}> <AddItemForm addItem={addTodoList}/></Grid>
-                <Grid container >{listToDo}</Grid>
+                <Grid container style={{padding: "7px 0"}}> <AddItemForm addItem={addTodoList}/></Grid>
+                <Grid container spacing={10}>{listToDo}</Grid>
             </Container>
         </div>
     );

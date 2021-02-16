@@ -38,11 +38,9 @@ export function AddItemForm(props: AddItemFormPropsType) {
                 label={"Title"}
                 error={error}
             />
-
-            <IconButton>
+            <IconButton onClick={addItem}>
                 <AddBox/>
             </IconButton>
-            {/*{error && <div className={"error-message"}>Title is required</div>}*/}
         </div>
     );
 
