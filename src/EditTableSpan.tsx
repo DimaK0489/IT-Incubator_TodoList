@@ -1,9 +1,11 @@
 import React, {ChangeEvent, useState} from "react";
+import {TextField} from "@material-ui/core";
 
 type EditTablePropsType = {
     title: string
     changeItem: (newTaskTitle: string) => void
 }
+
 export function EditTableSpan(props: EditTablePropsType) {
     const [editMode, setEditNode] = useState<boolean>(false)
     const [newTaskTitle, setNewTaskTitle] = useState<string>(props.title)
@@ -19,13 +21,14 @@ export function EditTableSpan(props: EditTablePropsType) {
         setNewTaskTitle(e.currentTarget.value)
     }
     return (
-            editMode
-            ? <input
-                    value={newTaskTitle}
-                    autoFocus
-                    onBlur={offEditMode}
-                    onChange={onChangeHandler}
-                />
+        editMode
+            ? <TextField
+                variant={"standard"}
+                value={newTaskTitle}
+                autoFocus
+                onBlur={offEditMode}
+                onChange={onChangeHandler}
+            />
             : <span onDoubleClick={onEditMode}>{props.title}</span>
     );
 }
