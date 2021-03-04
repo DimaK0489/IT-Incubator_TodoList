@@ -1,9 +1,9 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent} from "react";
 import {FilterValueType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditTableSpan} from "./EditTableSpan";
 import {Button, Checkbox, IconButton} from "@material-ui/core";
-import {CheckBox, Delete} from "@material-ui/icons";
+import {Delete} from "@material-ui/icons";
 
 export type TodoListProps = {
     id: string
