@@ -17,14 +17,14 @@ export type  TaskStateType = {
 export type FilterValueType = "all" | "active" | "completed"
 
 function App() {
-    const todolistID1 = v1()
-    const todolistID2 = v1()
+    const todolistId1 = v1()
+    const todolistId2 = v1()
     const [todoLists, setTodoList] = useState<Array<TodoListType>>([
-        {id: todolistID1, title: "What to learn", filter: "all"},
-        {id: todolistID2, title: "What to buy", filter: "all"},
+        {id: todolistId1, title: "What to learn", filter: "all"},
+        {id: todolistId2, title: "What to buy", filter: "all"},
     ])
     const [tasks, setTasks] = useState<TaskStateType>({
-        [todolistID1]: [
+        [todolistId1]: [
             {id: v1(), title: "HTML", isDone: true},
             {id: v1(), title: "CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},
@@ -34,7 +34,7 @@ function App() {
             {id: v1(), title: "GraphQL", isDone: false},
             {id: v1(), title: "ANGULAR", isDone: false},
         ],
-        [todolistID2]: [
+        [todolistId2]: [
             {id: v1(), title: "Milk", isDone: true},
             {id: v1(), title: "Beef", isDone: true},
             {id: v1(), title: "Meet", isDone: true},
@@ -154,3 +154,6 @@ function App() {
 
 
 export default App;
+
+export class TasksStateType {
+}

@@ -1,5 +1,3 @@
-import {csCZ} from "@material-ui/core/locale";
-
 type StateType = {
     age: number
     childrenCount: number
