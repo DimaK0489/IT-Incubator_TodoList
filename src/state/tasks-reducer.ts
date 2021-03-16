@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {AddTodoListActionType, RemoveTodoListActionType} from "./todo-lists-reducer";
+import {AddTodoListActionType, RemoveTodoListActionType, todolistId1, todolistId2} from "./todo-lists-reducer";
 import {TasksStateType} from "../App";
 
 export type RemoveTaskActionType = {
@@ -25,7 +25,28 @@ export type ChangeTitleActionType = {
     todolistId: string
 }
 
-let initialState: TasksStateType = {}
+let initialState: TasksStateType = {
+    [todolistId1]: [
+        {id: v1(), title: "HTML", isDone: true},
+        {id: v1(), title: "CSS", isDone: true},
+        {id: v1(), title: "JS", isDone: true},
+        {id: v1(), title: "REACT", isDone: true},
+        {id: v1(), title: "REDUX", isDone: false},
+        {id: v1(), title: "REST API", isDone: false},
+        {id: v1(), title: "GraphQL", isDone: false},
+        {id: v1(), title: "ANGULAR", isDone: false},
+    ],
+    [todolistId2]: [
+        {id: v1(), title: "Milk", isDone: true},
+        {id: v1(), title: "Beef", isDone: true},
+        {id: v1(), title: "Meat", isDone: true},
+        {id: v1(), title: "Bread", isDone: true},
+        {id: v1(), title: "Vegetables", isDone: false},
+        {id: v1(), title: "Eggs", isDone: false},
+        {id: v1(), title: "Water", isDone: false},
+        {id: v1(), title: "Juice", isDone: false},
+    ]
+}
 
 export type ActionType = RemoveTaskActionType
     | AddTaskActionType

@@ -20,8 +20,12 @@ type ChangeTodoListTitleActionType = {
     title: string
     id: string
 }
-
-let initialState: Array<TodoListType> = []
+export const todolistId1 = v1()
+export const todolistId2 = v1()
+let initialState: Array<TodoListType> = [
+    {id: todolistId1, title: "What to learn", filter: "all"},
+    {id: todolistId2, title: "What to buy", filter: "all"},
+]
 
 export type ActionType =
     RemoveTodoListActionType
