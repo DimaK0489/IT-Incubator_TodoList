@@ -4,6 +4,7 @@ import {AddItemForm} from "./AddItemForm";
 import {EditTableSpan} from "./EditTableSpan";
 import {Button, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
+import {Task} from "./Task";
 
 export type TodoListProps = {
     id: string
@@ -25,11 +26,11 @@ export type TasksType = {
 }
 
 export const TodoList = React.memo((props: TodoListProps) =>  {
-    console.log("Todolist")
     const addTask = useCallback((title: string) => {
         props.addTask(title, props.id)
-    }, [])
-    const changeTodoListTitle = (title: string) => props.changeTodoListTitle(title, props.id)
+    }, [props.addTask, props.id])
+    const changeTodoListTitle = useCallback((title: string) =>
+        props.changeTodoListTitle(title, props.id),[props.changeTodoListTitle, props.id])
     const onAllClickHandler = () => {
         props.changeFilter("all", props.id)
     }
@@ -39,9 +40,9 @@ export const TodoList = React.memo((props: TodoListProps) =>  {
     const onCompletedClickHandler = () => {
         props.changeFilter("completed", props.id)
     }
-    const removeTask = () => {
+    const removeTask = useCallback(() => {
         props.removeTodolist(props.id)
-    }
+    }, [])
     let taskForTodolist = props.tasks
     if (props.filter === "active") {
         taskForTodolist =  props.tasks.filter(t => t.isDone === false)
@@ -50,27 +51,12 @@ export const TodoList = React.memo((props: TodoListProps) =>  {
         taskForTodolist = props.tasks.filter(t => t.isDone === true)
     }
     const tasks = taskForTodolist.map(t => {
-        const onRemoveHandler = () => {
-            props.removeTask(t.id, props.id)
-        }
-        const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeStatus(t.id, e.currentTarget.checked, props.id)
-        }
-        const changeTitle = (title: string) => {
-            props.changeTaskTitle(t.id, title, props.id)
-        }
-
-        return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-            <Checkbox
-                color={"secondary"}
-                checked={t.isDone}
-                onChange={onChangeHandler}
-            />
-            <EditTableSpan title={t.title}changeItem={changeTitle}/>
-            <IconButton onClick = {onRemoveHandler}>
-                <Delete/>
-            </IconButton>
-        </li>
+        return <Task task={t}
+                     key={t.id}
+                     removeTask={props.removeTask}
+                     changeTaskTitle={props.changeTaskTitle}
+                     changeStatus={props.changeStatus}
+                     todolistId={props.id}/>
     })
 
     return (

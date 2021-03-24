@@ -6,7 +6,7 @@ type EditTablePropsType = {
     changeItem: (newTaskTitle: string) => void
 }
 
-export function EditTableSpan(props: EditTablePropsType) {
+export const EditTableSpan = React.memo((props: EditTablePropsType) => {
     const [editMode, setEditNode] = useState<boolean>(false)
     const [newTaskTitle, setNewTaskTitle] = useState<string>(props.title)
 
@@ -31,4 +31,4 @@ export function EditTableSpan(props: EditTablePropsType) {
             />
             : <span onDoubleClick={onEditMode}>{props.title}</span>
     );
-}
+})
