@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback, useMemo} from "react";
 import {FilterValueType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditTableSpan} from "./EditTableSpan";
@@ -24,11 +24,11 @@ export type TasksType = {
     isDone: boolean
 }
 
-export function TodoList(props: TodoListProps) {
-
-    const addTask = (title: string) => {
+export const TodoList = React.memo((props: TodoListProps) =>  {
+    console.log("Todolist")
+    const addTask = useCallback((title: string) => {
         props.addTask(title, props.id)
-    }
+    }, [])
     const changeTodoListTitle = (title: string) => props.changeTodoListTitle(title, props.id)
     const onAllClickHandler = () => {
         props.changeFilter("all", props.id)
@@ -42,7 +42,14 @@ export function TodoList(props: TodoListProps) {
     const removeTask = () => {
         props.removeTodolist(props.id)
     }
-    const tasks = props.tasks.map(t => {
+    let taskForTodolist = props.tasks
+    if (props.filter === "active") {
+        taskForTodolist =  props.tasks.filter(t => t.isDone === false)
+    }
+    if (props.filter === "completed") {
+        taskForTodolist = props.tasks.filter(t => t.isDone === true)
+    }
+    const tasks = taskForTodolist.map(t => {
         const onRemoveHandler = () => {
             props.removeTask(t.id, props.id)
         }
@@ -52,6 +59,7 @@ export function TodoList(props: TodoListProps) {
         const changeTitle = (title: string) => {
             props.changeTaskTitle(t.id, title, props.id)
         }
+
         return <li key={t.id} className={t.isDone ? "is-done" : ""}>
             <Checkbox
                 color={"secondary"}
@@ -64,6 +72,7 @@ export function TodoList(props: TodoListProps) {
             </IconButton>
         </li>
     })
+
     return (
         <div>
             <h3><EditTableSpan title={props.value} changeItem={changeTodoListTitle}/>
@@ -95,4 +104,4 @@ export function TodoList(props: TodoListProps) {
             </div>
         </div>
     )
-}
+});

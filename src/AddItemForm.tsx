@@ -2,19 +2,20 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
+
 type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
-export function AddItemForm(props: AddItemFormPropsType) {
+export const AddItemForm = React.memo((props: AddItemFormPropsType) =>  {
     const [newTaskTitle, setNewTaskTitle] = useState<string>("")
-    const [error, setError] = useState<boolean>(false)
+    const [error, setError] = useState<string | null>(null)
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setNewTaskTitle(e.currentTarget.value)
-        setError(false)
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (error !== null) setError(null)
         if (e.key === "Enter") addItem();
     }
     const addItem = () => {
@@ -23,7 +24,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
             props.addItem(trimmedTitle);
             setNewTaskTitle("")
         } else {
-            setError(true);
+            setError("Title is required");
         }
     }
     return(
@@ -33,15 +34,13 @@ export function AddItemForm(props: AddItemFormPropsType) {
                 value={newTaskTitle}
                 onChange={onChangeHandler}
                 onKeyPress={onKeyPressHandler}
-                onBlur={() => setError(false)}
-                helperText={error ? "Title is required" : ""}
+                helperText={error}
                 label={"Title"}
-                error={error}
+                error={!!error}
             />
             <IconButton onClick={addItem}>
                 <AddBox/>
             </IconButton>
         </div>
     );
-
-}
+});
