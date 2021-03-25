@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useState} from "react";
 import {TextField} from "@material-ui/core";
 
-type EditTablePropsType = {
+export type EditTablePropsType = {
     title: string
     changeItem: (newTaskTitle: string) => void
 }
