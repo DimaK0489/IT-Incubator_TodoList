@@ -29,7 +29,7 @@ export type TaskType = {
 export type UpdateTaskType = {
     title: string
     description: string
-    completed: boolean
+    //completed: boolean
     status: number
     priority: number
     startDate: string
@@ -54,28 +54,30 @@ export const settings = {
     }
 }
 export const todolistsAPI = {
-       getTodolists() {
-           return instance.get<Array<TodolistType>>("todo-lists")
-       },
-       createTodolist(title: string) {
-           return instance.post<CommonResponseType<{item: TodolistType}>>("todo-lists",{title})
-       },
-       deleteTodolist(todolistId:string) {
-           return instance.delete<CommonResponseType>(`todo-lists/${todolistId}`)
-       },
-       updateTodolist(todolistId: string, title: string) {
-           return instance.put<CommonResponseType>(`todo-lists/${todolistId}`, {title})
-       },
-       getTasks(todolistId: string) {
-           return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
-       },
-       deleteTask(todolistId: string, taskId:string) {
-           return instance.delete<CommonResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
-       },
-       updateTask(todolistId: string, taskId: string) {
-           return instance.put<UpdateTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`)
-       },
-       createTask(todolistId: string, title: string) {
-           return instance.post(`todo-lists/${todolistId}/tasks`)
-       }
+    getTodolists() {
+        return instance.get<Array<TodolistType>>("todo-lists")
+    },
+    createTodolist(title: string) {
+        return instance.post<CommonResponseType<{ item: TodolistType }>>("todo-lists", {title})
+    },
+    deleteTodolist(todolistId: string) {
+        return instance.delete<CommonResponseType>(`todo-lists/${todolistId}`)
+    },
+    updateTodolist(todolistId: string, title: string) {
+        return instance.put<CommonResponseType>(`todo-lists/${todolistId}`, {title})
+    },
+    getTasks(todolistId: string) {
+        return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
+    },
+    createTask(todolistId: string, taskTitle: string) {
+        return instance.post<CommonResponseType<TaskType>>(`todo-lists/${todolistId}/tasks`,{title: taskTitle})
+    },
+    updateTask(todolistId: string, taskId: string, model: UpdateTaskType) {
+        return instance.put<UpdateTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+    },
+    deleteTask(todolistId: string, taskId: string) {
+        return instance.delete<CommonResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    }
+
+
 }
