@@ -1,28 +1,24 @@
-import React, {ChangeEvent, useCallback, useMemo} from "react";
-import {FilterValueType} from "./App";
+import React, {useCallback} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditTableSpan} from "./EditTableSpan";
-import {Button, Checkbox, IconButton} from "@material-ui/core";
+import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {Task} from "./Task";
+import {FilterValueType} from "./state/todo-lists-reducer";
+import {TaskStatuses, TaskType} from "./api/todolists-a-p-i";
 
 export type TodoListProps = {
     id: string
     value: string
-    tasks: Array<TasksType>
+    tasks: Array<TaskType>
     filter: FilterValueType
     removeTask: (id: string, todolistID: string) => void
     changeFilter: (value: FilterValueType, todolistID: string) => void
     addTask: (title: string, todolistID: string) => void
-    changeStatus: (taskID: string, isDone: boolean, todolistID: string) => void
+    changeStatus: (taskID: string, status: TaskStatuses, todolistID: string) => void
     removeTodolist: (todolistID: string) => void
     changeTaskTitle: (taskID: string, title: string, todolistID: string) => void
     changeTodoListTitle: (title: string, todolistID: string) => void
-}
-export type TasksType = {
-    id: string
-    title: string
-    isDone: boolean
 }
 
 export const TodoList = React.memo((props: TodoListProps) =>  {
@@ -45,10 +41,10 @@ export const TodoList = React.memo((props: TodoListProps) =>  {
     }, [])
     let taskForTodolist = props.tasks
     if (props.filter === "active") {
-        taskForTodolist =  props.tasks.filter(t => t.isDone === false)
+        taskForTodolist =  props.tasks.filter(t => t.status === TaskStatuses.New)
     }
     if (props.filter === "completed") {
-        taskForTodolist = props.tasks.filter(t => t.isDone === true)
+        taskForTodolist = props.tasks.filter(t => t.status === TaskStatuses.Completed)
     }
     const tasks = taskForTodolist.map(t => {
         return <Task task={t}
