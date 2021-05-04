@@ -27,26 +27,34 @@ export type ChangeTitleActionType = {
 }
 
 let initialState: TasksStateType = {
-    /*[todolistId1]: [
-        {id: v1(), title: "HTML", isDone: true},
-        {id: v1(), title: "CSS", isDone: true},
-        {id: v1(), title: "JS", isDone: true},
-        {id: v1(), title: "REACT", isDone: true},
-        {id: v1(), title: "REDUX", isDone: false},
-        {id: v1(), title: "REST API", isDone: false},
-        {id: v1(), title: "GraphQL", isDone: false},
-        {id: v1(), title: "ANGULAR", isDone: false},
+    [todolistId1]: [
+        {id: v1(), title: "HTML", status: TaskStatuses.Completed, todoListId: todolistId1, description: "",
+            startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
+        {id: v1(), title: "CSS", status: TaskStatuses.Completed, todoListId: todolistId1, description: "",
+            startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
+        {id: v1(), title: "JS",status: TaskStatuses.New, todoListId: todolistId1, description: "",
+            startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
+        {id: v1(), title: "REACT",status: TaskStatuses.Completed, todoListId: todolistId1, description: "",
+            startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
+        {id: v1(), title: "REDUX",status: TaskStatuses.Completed, todoListId: todolistId1, description: "",
+            startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
+        {id: v1(), title: "REST API",status: TaskStatuses.New, todoListId: todolistId1, description: "",
+            startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
+        {id: v1(), title: "GraphQL", status: TaskStatuses.New, todoListId: todolistId1, description: "",
+            startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
+        {id: v1(), title: "ANGULAR", status: TaskStatuses.New, todoListId: todolistId1, description: "",
+            startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
     ],
     [todolistId2]: [
-        {id: v1(), title: "Milk", isDone: true},
-        {id: v1(), title: "Beef", isDone: false},
-        {id: v1(), title: "Meat", isDone: true},
-        {id: v1(), title: "Bread", isDone: false},
-        {id: v1(), title: "Vegetables", isDone: false},
-        {id: v1(), title: "Eggs", isDone: false},
-        {id: v1(), title: "Water", isDone: true},
-        {id: v1(), title: "Juice", isDone: false},
-    ]*/
+        {id: v1(), title: "Milk", status: TaskStatuses.Completed, todoListId: todolistId2, description: "",
+            startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
+        {id: v1(), title: "Beef", status: TaskStatuses.New, todoListId: todolistId2, description: "",
+            startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
+        {id: v1(), title: "Meet", status: TaskStatuses.Completed, todoListId: todolistId2, description: "",
+            startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
+        {id: v1(), title: "Bred", status: TaskStatuses.New, todoListId: todolistId2, description: "",
+            startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low}
+    ]
 }
 
 export type ActionType = RemoveTaskActionType
