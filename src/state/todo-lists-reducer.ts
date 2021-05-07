@@ -1,25 +1,8 @@
 import {v1} from "uuid";
-import {TodolistType} from "../api/todolists-a-p-i";
+import {todolistsAPI, TodolistType} from "../api/todolists-a-p-i";
+import {Dispatch} from "redux";
+import {AppRootStateType} from "./store";
 
-export type RemoveTodoListActionType = {
-    type: "REMOVE-TODOLIST",
-    id: string
-}
-export type AddTodoListActionType = {
-    type: "ADD-TODOLIST"
-    title: string
-    todolistId: string
-}
-type ChangeTodoListFilterActionType = {
-    type: "CHANGE--TODOLIST-FILTER"
-    filter: FilterValueType
-    id: string
-}
-type ChangeTodoListTitleActionType = {
-    type: "CHANGE-TODOLIST-TITLE"
-    title: string
-    id: string
-}
 export const todolistId1 = v1()
 export const todolistId2 = v1()
 let initialState: Array<TodolistDomainType> = [
@@ -32,10 +15,11 @@ export type ActionType =
     | AddTodoListActionType
     | ChangeTodoListFilterActionType
     | ChangeTodoListTitleActionType
+    | SetTodolistActionType
 
 export type FilterValueType = "all" | "active" | "completed"
 export type TodolistDomainType = TodolistType & {
-    filter: FilterValueType
+    filter?: FilterValueType
 }
 
 export const todoListsReducer = (state = initialState, action: ActionType): Array<TodolistDomainType> => {
@@ -62,12 +46,6 @@ export const todoListsReducer = (state = initialState, action: ActionType): Arra
             })
         }
         case "CHANGE-TODOLIST-TITLE": {
-            /*const todolist = state.find(t => t.id === action.id)
-            if (todolist) {
-                todolist.title = action.title
-                return [...state]
-            }
-            return state*/
             return state.map(tl => {
                 if (tl.id === action.id) {
                     return {...tl, title: action.title}
@@ -76,19 +54,36 @@ export const todoListsReducer = (state = initialState, action: ActionType): Arra
                 }
             })
         }
+        case "SET-TODOLIST": {
+            return action.todolist.map(tl => {
+                return {
+                    ...tl,
+                    filter: "all"
+                }
+            })
+        }
         default:
             return state
     }
 }
-export const removeTodolistAC = (todolistId: string): RemoveTodoListActionType => {
-    return {type: 'REMOVE-TODOLIST', id: todolistId}
-}
-export const addTodolistAC = (title: string): AddTodoListActionType => {
-    return {type: "ADD-TODOLIST", title: title, todolistId: v1()}
-}
-export const changeTodolistTitleAC = (id: string, title: string): ChangeTodoListTitleActionType => {
-    return {type: "CHANGE-TODOLIST-TITLE", title: title, id: id}
-}
-export const changeTodolistFilterAC = (filter: FilterValueType, todolistID: string): ChangeTodoListFilterActionType => {
-    return {type: "CHANGE--TODOLIST-FILTER", filter: filter, id: todolistID}
+export const removeTodolistAC = (todolistId: string) => ({type: 'REMOVE-TODOLIST', id: todolistId} as const)
+export type RemoveTodoListActionType = ReturnType<typeof removeTodolistAC>
+
+export const addTodolistAC = (title: string) => ({type: "ADD-TODOLIST", title: title, todolistId: v1()} as const)
+export type AddTodoListActionType = ReturnType<typeof addTodolistAC>
+
+export const changeTodolistTitleAC = (id: string, title: string) => ({type: "CHANGE-TODOLIST-TITLE", title: title, id: id} as const)
+export type ChangeTodoListTitleActionType = ReturnType<typeof changeTodolistTitleAC>
+
+export const changeTodolistFilterAC = (filter: FilterValueType, todolistID: string) => ({type: "CHANGE--TODOLIST-FILTER", filter: filter, id: todolistID} as const)
+export type ChangeTodoListFilterActionType = ReturnType<typeof changeTodolistFilterAC>
+
+export const setTodolistsAC = (todolist: Array<TodolistDomainType>) => ({type: "SET-TODOLIST", todolist} as const)
+export type SetTodolistActionType = ReturnType<typeof setTodolistsAC>
+//Thunk
+export const fetchTodolistsTC = () => (dispatch: Dispatch, getState: () => AppRootStateType): void => {
+    todolistsAPI.getTodolists()
+        .then((res) => {
+            dispatch(setTodolistsAC(res.data))
+        })
 }
