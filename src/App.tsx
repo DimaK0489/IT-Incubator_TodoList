@@ -26,17 +26,7 @@ function App() {
             {id: v1(), title: "CSS", status: TaskStatuses.Completed, todoListId: todolistId1, description: "",
                 startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
             {id: v1(), title: "JS",status: TaskStatuses.New, todoListId: todolistId1, description: "",
-                startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
-            {id: v1(), title: "REACT",status: TaskStatuses.Completed, todoListId: todolistId1, description: "",
-                startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
-            {id: v1(), title: "REDUX",status: TaskStatuses.Completed, todoListId: todolistId1, description: "",
-                startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
-            {id: v1(), title: "REST API",status: TaskStatuses.New, todoListId: todolistId1, description: "",
-                startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
-            {id: v1(), title: "GraphQL", status: TaskStatuses.New, todoListId: todolistId1, description: "",
-                startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
-            {id: v1(), title: "ANGULAR", status: TaskStatuses.New, todoListId: todolistId1, description: "",
-                startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low},
+                startDate: "", deadline: "", addedDate: "", order: 0, priority: TaskPriorities.Low}
         ],
         [todolistId2]: [
             {id: v1(), title: "Milk", status: TaskStatuses.Completed, todoListId: todolistId2, description: "",
