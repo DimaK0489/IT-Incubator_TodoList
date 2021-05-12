@@ -1,12 +1,6 @@
 import axios from "axios"
 
-const instance = axios.create({
-    baseURL: "https://social-network.samuraijs.com/api/1.1/",
-    withCredentials: true,
-    headers: {
-        'API-KEY': 'bf0875ba-8463-481a-87a8-643832194416'
-    }
-})
+//Types
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,
@@ -58,12 +52,16 @@ type GetTasksResponse = {
     items: Array<TaskType>
 }
 
-export const settings = {
+// Settings
+const instance = axios.create({
+    baseURL: "https://social-network.samuraijs.com/api/1.1/",
     withCredentials: true,
     headers: {
         'API-KEY': 'bf0875ba-8463-481a-87a8-643832194416'
     }
-}
+})
+
+// API
 export const todolistsAPI = {
     getTodolists() {
         return instance.get<Array<TodolistType>>("todo-lists")

@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from "react-redux";
-import {store} from './state/store';
-import AppWithRedux from "./AppWithRedux";
-import AppWithReducer from "./AppWithReducer";
+import {store} from './app/store';
+import AppWithRedux from "./app/App";
+import AppWithReducer from "./trash/AppWithReducer";
 
 const AppWithReducerComponent = AppWithReducer;
 

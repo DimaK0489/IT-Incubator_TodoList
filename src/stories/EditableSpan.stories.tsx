@@ -1,6 +1,6 @@
 import React from 'react';
 import {Meta, Story} from '@storybook/react/types-6-0';
-import {EditTablePropsType, EditTableSpan} from "../EditTableSpan";
+import {EditTablePropsType, EditTableSpan} from "../components/EditableSpan/EditTableSpan";
 import {action} from "@storybook/addon-actions";
 
 export default {

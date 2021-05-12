@@ -1,8 +1,8 @@
 import React, {ChangeEvent, useCallback} from "react";
 import {Checkbox, IconButton} from "@material-ui/core";
-import {EditTableSpan} from "./EditTableSpan";
+import {EditTableSpan} from "../../../../components/EditableSpan/EditTableSpan";
 import {Delete} from "@material-ui/icons";
-import {TaskStatuses, TaskType} from "./api/todolists-a-p-i";
+import {TaskStatuses, TaskType} from "../../../../api/todolists-a-p-i";
 
 export type TaskPropsType = {
     task: TaskType
@@ -10,6 +10,9 @@ export type TaskPropsType = {
     changeStatus: (taskID: string, status: TaskStatuses, todolistID: string) => void
     removeTask: (id: string, todolistID: string) => void
     changeTaskTitle: (taskID: string, title: string, todolistID: string) => void
+}
+export type  TasksStateType = {
+    [key: string]: Array<TaskType>
 }
 
 export const Task = React.memo((props: TaskPropsType) => {
