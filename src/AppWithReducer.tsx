@@ -5,7 +5,7 @@ import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
+import {addTaskAC, updateTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
 import {
     addTodolistAC,
     changeTodolistFilterAC,
@@ -63,7 +63,7 @@ function AppWithReducer() {
         }))
     }
     function changeStatus(taskID: string, status: TaskStatuses, todolistID: string) {
-        dispatchToTasks(changeTaskStatusAC(taskID, status, todolistID))
+        dispatchToTasks(updateTaskStatusAC(taskID, status, todolistID))
     }
     function changeTaskTitle(taskID: string, title: string, todolistID: string) {
         dispatchToTasks(changeTaskTitleAC(taskID, title, todolistID))
