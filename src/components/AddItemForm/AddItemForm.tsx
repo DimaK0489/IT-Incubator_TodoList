@@ -5,9 +5,10 @@ import {AddBox} from "@material-ui/icons";
 
 export type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
-export const AddItemForm = React.memo((props: AddItemFormPropsType) =>  {
+export const AddItemForm = React.memo(({addItem, disabled = false}: AddItemFormPropsType) =>  {
     const [newTaskTitle, setNewTaskTitle] = useState<string>("")
     const [error, setError] = useState<string | null>(null)
 
@@ -16,12 +17,12 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) =>  {
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (error !== null) setError(null)
-        if (e.key === "Enter") addItem();
+        if (e.key === "Enter") addItemHandler();
     }
-    const addItem = () => {
+    const addItemHandler = () => {
         let trimmedTitle = newTaskTitle.trim()
         if (trimmedTitle !== "") {
-            props.addItem(trimmedTitle);
+            addItem(trimmedTitle);
             setNewTaskTitle("")
         } else {
             setError("Title is required");
@@ -36,9 +37,10 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) =>  {
                 onKeyPress={onKeyPressHandler}
                 helperText={error}
                 label={"Title"}
-                error={!!error}
+                error={!error}
+                disabled={disabled}
             />
-            <IconButton onClick={addItem}>
+            <IconButton onClick={addItemHandler} disabled={disabled}>
                 <AddBox/>
             </IconButton>
         </div>

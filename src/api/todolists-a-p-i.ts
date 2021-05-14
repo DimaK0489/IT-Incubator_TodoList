@@ -40,7 +40,7 @@ export type UpdateTaskModelType = {
     startDate: string
     deadline: string
 }
-type CommonResponseType<T = {}> = {
+export type CommonResponseType<T = {}> = {
     resultCode: number
     messages: Array<string>
     fieldsErrors: Array<string>
@@ -82,7 +82,7 @@ export const todolistsAPI = {
         return instance.post<CommonResponseType<{item: TaskType }>>(`todo-lists/${todolistId}/tasks`,{title: taskTitle})
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
-        return instance.put<UpdateTaskModelType>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+        return instance.put<CommonResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
     },
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<CommonResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)

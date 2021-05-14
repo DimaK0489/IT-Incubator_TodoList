@@ -1,13 +1,7 @@
 import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../app/store";
-import {
-    addTodolistTC,
-    changeTodolistFilterAC,
-    changeTodolistTitleTC,
-    fetchTodolistsTC,
-    FilterValueType,
-    removeTodolistTC,
+import {addTodolistTC,changeTodolistFilterAC,changeTodolistTitleTC,fetchTodolistsTC,FilterValueType,removeTodolistTC,
     TodolistDomainType
 } from "./todolist/todoLists-reducer";
 import {addTaskTC, removeTasksTC, updateTaskTC} from "./todolist/tasks-reducer";
@@ -17,13 +11,19 @@ import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {TodoList} from "./todolist/Todolist";
 import {TasksStateType} from "./todolist/Task/Task";
 
+type TodolistsListPropsType = {
+    demo?: boolean
+}
 
-export const TodolistsList: React.FC = () => {
+export const TodolistsList: React.FC<TodolistsListPropsType> = ({demo = false}) => {
     const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todoLists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
 
     useEffect(() => {
+        if (demo) {
+            return
+        }
         dispatch(fetchTodolistsTC())
     }, [])
 
@@ -63,11 +63,9 @@ export const TodolistsList: React.FC = () => {
                     <Grid item key={t.id}>
                         <Paper elevation={10} style={{padding: "20px"}}>
                             <TodoList
-                                id={t.id}
                                 key={t.id}
-                                value={t.title}
-                                filter={t.filter}
-                                entityStatus={t.entityStatus}
+                                todolist={t}
+                                //entityStatus={t.entityStatus}
                                 tasks={taskForTodolist}
                                 removeTask={removeTask}
                                 changeFilter={changeFilter}
@@ -76,6 +74,7 @@ export const TodolistsList: React.FC = () => {
                                 removeTodolist={removeTodolist}
                                 changeTaskTitle={changeTaskTitle}
                                 changeTodoListTitle={changeTodoListTitle}
+                                demo={demo}
                             /></Paper>
                     </Grid>
                 )

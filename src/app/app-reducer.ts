@@ -1,11 +1,11 @@
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
-const initialState = {
+export const initialState = {
     status: 'loading' as RequestStatusType,
     error: null as string | null
 }
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 type ActionsType = SetAppStatusActionType | SetAppErrorActionType
 
 export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>

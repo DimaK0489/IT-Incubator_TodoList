@@ -1,19 +1,19 @@
 import React from 'react';
 import {Meta, Story} from '@storybook/react/types-6-0';
-import AppWithRedux from "../app/App";
 import {Provider} from "react-redux";
 import { store } from '../app/store';
+import App from "../app/App";
 
 export default {
     title: 'TODOLIST/AppWithRedux',
-    component: AppWithRedux,
+    component: App,
     argTypes: {}
 } as Meta;
 
-const Template: Story = (args) => <Provider store={store}> <AppWithRedux /> </Provider>;
+const Template: Story = (args) => <Provider store={store}> <App /> </Provider>;
 
-export const AppWithReduxStories = Template.bind({});
-AppWithReduxStories.args = {
+export const AppStories = Template.bind({});
+AppStories.args = {
 
 };
 

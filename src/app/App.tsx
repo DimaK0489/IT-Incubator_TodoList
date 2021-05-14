@@ -8,7 +8,11 @@ import {AppRootStateType} from "./store";
 import {RequestStatusType} from "./app-reducer";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 
-const AppWithRedux = () => {
+type AppWithReduxPropsType = {
+    demo?: boolean
+}
+
+const AppWithRedux = ({demo = false}: AppWithReduxPropsType) => {
 
     const status = useSelector<AppRootStateType,RequestStatusType>((state => state.app.status))
 
@@ -27,7 +31,7 @@ const AppWithRedux = () => {
             </AppBar>
             <Container fixed>
                 {status === "loading" && <LinearProgress color="secondary" />}
-                <TodolistsList />
+                <TodolistsList demo={demo}/>
             </Container>
             <ErrorSnackbar />
         </div>
