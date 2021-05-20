@@ -1,12 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
-import {AppBar, Button, Container, IconButton, LinearProgress, Toolbar, Typography} from "@material-ui/core";
+import {
+    AppBar,
+    Button,
+    CircularProgress,
+    Container,
+    IconButton,
+    LinearProgress,
+    Toolbar,
+    Typography
+} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {TodolistsList} from "../features/Todolists/TodolistsList";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
-import {RequestStatusType} from "./app-reducer";
+import {RequestStatusType, initializeAppTC} from "./app-reducer";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
+import {Route,Switch, Redirect} from 'react-router-dom';
+import {Login} from "../features/Todolists/Login/Login";
 
 type AppWithReduxPropsType = {
     demo?: boolean
@@ -14,7 +25,21 @@ type AppWithReduxPropsType = {
 
 const AppWithRedux = ({demo = false}: AppWithReduxPropsType) => {
 
-    const status = useSelector<AppRootStateType,RequestStatusType>((state => state.app.status))
+    const status = useSelector<AppRootStateType, RequestStatusType>((state => state.app.status))
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>( (state) => state.auth.isLoggedIn)
+    const dispatch = useDispatch()
+
+    useEffect( () => {
+        dispatch(initializeAppTC())
+    },[])
+
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
 
     return (
         <div className="App">
@@ -26,14 +51,19 @@ const AppWithRedux = ({demo = false}: AppWithReduxPropsType) => {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    {isLoggedIn && <Button color="inherit">LogOut</Button> }
                 </Toolbar>
             </AppBar>
             <Container fixed>
-                {status === "loading" && <LinearProgress color="secondary" />}
-                <TodolistsList demo={demo}/>
+                {status === "loading" && <LinearProgress color="secondary"/>}
+                <Switch>
+                    <Route exact path={'/'} render={() => <TodolistsList demo={demo}/>}/>
+                    <Route path={'/login'} render={() => <Login/>}/>
+                    <Route path={'/404'} render={() => <h1 style={{textAlign: "center"}}>404.Page not found</h1>}/>
+                    <Redirect from={'*'} to={'/404'}/>
+                </Switch>
             </Container>
-            <ErrorSnackbar />
+            <ErrorSnackbar/>
         </div>
     );
 }

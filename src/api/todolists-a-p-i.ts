@@ -51,6 +51,17 @@ type GetTasksResponse = {
     totalCount: number
     items: Array<TaskType>
 }
+export type LoginParamsType = {
+    email: string,
+    password: string,
+    rememberMe?: boolean,
+    captcha?: string
+}
+type AuthMeResponseType = {
+    id: number
+    email: string
+    login: string
+}
 
 // Settings
 const instance = axios.create({
@@ -87,5 +98,15 @@ export const todolistsAPI = {
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<CommonResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     }
-
+}
+export const authAPI = {
+    login(data: LoginParamsType) {
+        return instance.post<CommonResponseType<{userId: number}>>("auth/login", data)
+    },
+    me() {
+        return instance.get<CommonResponseType<AuthMeResponseType>>("auth/me")
+    },
+    logout() {
+        return instance.delete<CommonResponseType>("auth/login")
+    }
 }
