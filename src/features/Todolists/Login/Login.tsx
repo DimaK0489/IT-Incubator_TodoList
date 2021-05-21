@@ -15,6 +15,7 @@ type FormikErrorType = {
 export const Login = () => {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector<AppRootStateType, boolean>( (state) => state.auth.isLoggedIn)
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -24,12 +25,12 @@ export const Login = () => {
         validate: (values) => {
             const errors: FormikErrorType = {};
             if (!values.email) {
-                errors.email = 'Required';
+                errors.email = 'Email is required';
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address';
             }
             if (!values.password) {
-                errors.password = "Required"
+                errors.password = "Password required"
             } else if (values.password.length < 3) {
                 errors.password = "Password not less than 3 characters"
             }

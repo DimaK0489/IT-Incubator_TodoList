@@ -5,8 +5,10 @@ import {authAPI} from "../api/todolists-a-p-i";
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 export const initialState = {
+    //is there any interaction with the server
     status: 'loading' as RequestStatusType,
     error: null as string | null,
+    // "true" application initiation
     isInitialized: false
 }
 
@@ -34,7 +36,7 @@ export const setAppErrorAC = (error: null | string) => ({type: 'APP/SET-ERROR', 
 export const setAppInitializedAC = (isInitialized: boolean) => ({type: 'APP/SET-INITIALIZED', isInitialized} as const)
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
-    authAPI.me()
+    authAPI.me( )
         .then((res) => {
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true));

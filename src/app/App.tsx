@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {
     AppBar,
@@ -18,6 +18,7 @@ import {RequestStatusType, initializeAppTC} from "./app-reducer";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {Route,Switch, Redirect} from 'react-router-dom';
 import {Login} from "../features/Todolists/Login/Login";
+import {logOutTC} from "../features/Todolists/Login/authReducer";
 
 type AppWithReduxPropsType = {
     demo?: boolean
@@ -34,6 +35,10 @@ const AppWithRedux = ({demo = false}: AppWithReduxPropsType) => {
         dispatch(initializeAppTC())
     },[])
 
+    const logOutHandler = useCallback( () => {
+        dispatch(logOutTC());
+    },[])
+    
     if (!isInitialized) {
         return <div
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
@@ -51,7 +56,7 @@ const AppWithRedux = ({demo = false}: AppWithReduxPropsType) => {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    {isLoggedIn && <Button color="inherit">LogOut</Button> }
+                    { isLoggedIn && <Button color="inherit" onClick={logOutHandler}>Log Out</Button> }
                 </Toolbar>
             </AppBar>
             <Container fixed>
