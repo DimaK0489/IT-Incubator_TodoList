@@ -1,23 +1,37 @@
-import {Dispatch} from 'redux'
 import {setAppStatusAC} from "../../../app/app-reducer";
 import {authAPI, LoginParamsType} from "../../../api/todolists-a-p-i";
 import {handleServerAppError, handleServerNetworkError} from "../../../utils/errorUtils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
+//Thunks
 export const loginTC = createAsyncThunk("auth/login", async (param: LoginParamsType, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
     try {
         const res = await authAPI.login(param)
         if (res.data.resultCode === 0) {
             thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
-            return {isLoggedIn: true}
+            return;
         } else {
             handleServerAppError(res.data, thunkAPI.dispatch)
-            return {isLoggedIn: false}
+            return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
         }
     } catch (error) {
         handleServerNetworkError(error, thunkAPI.dispatch)
-        return {isLoggedIn: false}
+        return thunkAPI.rejectWithValue({errors: [error], fieldsErrors: undefined})
+    }
+})
+export const logOutTC = createAsyncThunk("auth/logOut", async (param, thunkAPI) => {
+    thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
+    try {
+        const res = await authAPI.logout()
+        if (res.data.resultCode === 0) {
+            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
+            return;
+        } else {
+            handleServerAppError(res.data, thunkAPI.dispatch)
+        }
+    } catch (error) {
+        handleServerNetworkError(error, thunkAPI.dispatch)
     }
 })
 
@@ -32,8 +46,11 @@ const slice = createSlice({
         }
     },
     extraReducers: builder => {
-        builder.addCase(loginTC.fulfilled, (state, action) => {
-            state.isLoggedIn = action.payload.isLoggedIn
+        builder.addCase(loginTC.fulfilled, (state) => {
+            state.isLoggedIn = true
+        })
+        builder.addCase(logOutTC.fulfilled, (state) => {
+            state.isLoggedIn = false
         })
     }
 })
@@ -57,7 +74,7 @@ export const setIsLoggedInAC = slice.actions.setIsLoggedInAC
             handleServerNetworkError(error, dispatch)
         })
 }*/
-export const logOutTC = () => (dispatch: Dispatch) => {
+/*export const logOutTC = () => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}))
     authAPI.logout()
         .then((res) => {
@@ -71,5 +88,5 @@ export const logOutTC = () => (dispatch: Dispatch) => {
         .catch((error) => {
             handleServerNetworkError(error, dispatch)
         })
-}
+}*/
 

@@ -43,7 +43,7 @@ export type UpdateTaskModelType = {
 export type CommonResponseType<T = {}> = {
     resultCode: number
     messages: Array<string>
-    fieldsErrors: Array<string>
+    fieldsErrors?: Array<{field: string, error: string}>
     data: T
 }
 type GetTasksResponse = {

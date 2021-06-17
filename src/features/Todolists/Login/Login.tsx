@@ -3,7 +3,7 @@ import {Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField
 import {useFormik} from "formik";
 import {loginTC} from "./authReducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../../app/store";
+import {AppDispatchType, AppRootStateType} from "../../../app/store";
 import {Redirect} from "react-router-dom";
 
 type FormikErrorType = {
@@ -13,7 +13,7 @@ type FormikErrorType = {
 }
 
 export const Login = () => {
-    const dispatch = useDispatch();
+    const dispatch: AppDispatchType = useDispatch();
     const isLoggedIn = useSelector<AppRootStateType, boolean>( (state) => state.auth.isLoggedIn)
 
     const formik = useFormik({
