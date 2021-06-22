@@ -1,15 +1,15 @@
-import {applyMiddleware, combineReducers, createStore} from "redux";
+import {combineReducers} from "redux";
 import {tasksReducer} from "../../features/Todolists/todolist/tasks-reducer";
 import {todolistId1, todolistId2, todoListsReducer} from "../../features/Todolists/todolist/todoLists-reducer";
 import {v1} from "uuid";
 import {AppRootStateType, RootReducerType} from "../../app/store";
 import {Provider} from "react-redux";
 import React from "react";
-import {TaskPriorities, TaskStatuses} from "../../api/todolists-a-p-i";
 import {appReducer} from "../../app/app-reducer";
 import thunkMiddleware from "redux-thunk";
-import {authReducer} from "../../features/Todolists/Login/authReducer";
+import {authReducer} from "../../features/Todolists/Authorization/authReducer";
 import {configureStore} from "@reduxjs/toolkit";
+import {TaskPriorities, TaskStatuses} from "../../api/Types";
 
 const rootReducer: RootReducerType = combineReducers({
     tasks: tasksReducer,

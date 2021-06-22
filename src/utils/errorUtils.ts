@@ -1,6 +1,6 @@
 import {setAppErrorAC, setAppStatusAC} from "../app/app-reducer";
-import {CommonResponseType} from "../api/todolists-a-p-i";
 import {Dispatch} from "redux";
+import {CommonResponseType} from "../api/Types";
 
 export const handleServerAppError = <T>(data: CommonResponseType<T>, dispatch: Dispatch) => {
     if (data.messages.length) {

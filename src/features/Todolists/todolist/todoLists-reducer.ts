@@ -1,8 +1,9 @@
 import {v1} from "uuid";
-import {todolistsAPI, TodolistType} from "../../../api/todolists-a-p-i";
 import {RequestStatusType, setAppStatusAC,} from "../../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../../utils/errorUtils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {TodolistType} from "../../../api/Types";
+import {todolistsAPI} from "../../../api/todolists-a-p-i";
 
 export const todolistId1 = v1()
 export const todolistId2 = v1()

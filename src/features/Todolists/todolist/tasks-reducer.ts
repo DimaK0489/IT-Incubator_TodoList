@@ -1,11 +1,12 @@
 import {v1} from "uuid";
 import {addTodolistTC, fetchTodolistsTC, removeTodolistTC, todolistId1, todolistId2} from "./todoLists-reducer";
-import {TaskPriorities, TaskStatuses, todolistsAPI, UpdateTaskModelType} from "../../../api/todolists-a-p-i";
 import {AppRootStateType} from "../../../app/store";
 import {TasksStateType} from "./Task/Task";
 import {handleServerAppError, handleServerNetworkError} from "../../../utils/errorUtils";
 import {setAppStatusAC} from "../../../app/app-reducer";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {todolistsAPI} from "../../../api/todolists-a-p-i";
+import { UpdateTaskModelType, TaskStatuses, TaskPriorities } from "../../../api/Types";
 
 let initialState: TasksStateType = {
     [todolistId1]: [

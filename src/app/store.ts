@@ -3,7 +3,7 @@ import {todoListsReducer} from "../features/Todolists/todolist/todoLists-reducer
 import {combineReducers} from 'redux';
 import thunkMiddleware from "redux-thunk";
 import {appReducer} from "./app-reducer";
-import {authReducer} from '../features/Todolists/Login/authReducer';
+import {authReducer} from '../features/Todolists/Authorization/authReducer';
 import {configureStore} from "@reduxjs/toolkit";
 
 // объединяя reducer-ы с помощью combineReducers,

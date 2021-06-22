@@ -5,12 +5,13 @@ import {addTodolistTC,changeTodolistFilterAC,changeTodolistTitleTC,fetchTodolist
     TodolistDomainType
 } from "./todolist/todoLists-reducer";
 import {addTaskTC,  updateTaskTC, removeTasksTC} from "./todolist/tasks-reducer";
-import {TaskStatuses} from "../../api/todolists-a-p-i";
 import {Grid, Paper} from "@material-ui/core";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {TodoList} from "./todolist/Todolist";
 import {TasksStateType} from "./todolist/Task/Task";
 import {Redirect} from "react-router-dom";
+import {selectIsLoggedIn} from "./Authorization/selectors";
+import {TaskStatuses} from "../../api/Types";
 
 type TodolistsListPropsType = {
     demo?: boolean
@@ -19,7 +20,7 @@ type TodolistsListPropsType = {
 export const TodolistsList: React.FC<TodolistsListPropsType> = ({demo = false}) => {
     const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todoLists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
+    const isLoggedIn = useSelector(selectIsLoggedIn)
     const dispatch = useDispatch()
 
     useEffect(() => {

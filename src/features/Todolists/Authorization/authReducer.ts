@@ -1,7 +1,8 @@
 import {setAppStatusAC} from "../../../app/app-reducer";
-import {authAPI, LoginParamsType} from "../../../api/todolists-a-p-i";
 import {handleServerAppError, handleServerNetworkError} from "../../../utils/errorUtils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { authAPI } from "../../../api/todolists-a-p-i";
+import { LoginParamsType } from "../../../api/Types";
 
 //Thunks
 export const loginTC = createAsyncThunk("auth/login", async (param: LoginParamsType, thunkAPI) => {
