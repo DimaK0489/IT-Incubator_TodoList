@@ -2,7 +2,6 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
-
 export type AddItemFormPropsType = {
     addItem: (title: string) => void
     disabled?: boolean
@@ -40,7 +39,7 @@ export const AddItemForm = React.memo(({addItem, disabled = false}: AddItemFormP
                 error={!error}
                 disabled={disabled}
             />
-            <IconButton onClick={addItemHandler} disabled={disabled}>
+            <IconButton color="primary" onClick={addItemHandler} disabled={disabled} style={{marginLeft: '5px'}}>
                 <AddBox/>
             </IconButton>
         </div>

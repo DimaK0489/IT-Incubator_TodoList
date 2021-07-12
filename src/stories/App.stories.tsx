@@ -5,7 +5,7 @@ import { store } from '../app/store';
 import App from "../app/App";
 
 export default {
-    title: 'TODOLIST/AppWithRedux',
+    title: 'TODOLIST/App',
     component: App,
     argTypes: {}
 } as Meta;

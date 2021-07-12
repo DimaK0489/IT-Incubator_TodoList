@@ -9,7 +9,7 @@ export const todolistId1 = v1()
 export const todolistId2 = v1()
 
 //Thunks
-export const fetchTodolistsTC = createAsyncThunk("todolist/fetchTodolists", async (param, thunkAPI) =>  {
+export const fetchTodolistsTC = createAsyncThunk("todolist/fetchTodolists", async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: "loading"}))
     const res = await todolistsAPI.getTodolists()
     try {
@@ -48,12 +48,17 @@ export const addTodolistTC = createAsyncThunk("todolist/addTodolist", async (tit
         return thunkAPI.rejectWithValue(null)
     }
 })
-export const changeTodolistTitleTC = createAsyncThunk("todolist/changeTodolistTitle", async (param: { title: string, todolistId: string }, thunkAPI) => {
+export const changeTodolistTitleTC = createAsyncThunk("todolist/changeTodolistTitle",
+    async (param: { todolistId: string, title: string }, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: "loading"}))
-    await todolistsAPI.updateTodolist(param.todolistId, param.title)
+    const res = await todolistsAPI.updateTodolist(param.todolistId, param.title)
     try {
-        thunkAPI.dispatch(setAppStatusAC({status: "succeeded"}))
-        return param
+        if (res.data.resultCode === 0) {
+            thunkAPI.dispatch(setAppStatusAC({status: "succeeded"}))
+            return {todolistId: param.todolistId, title: param.title}
+        } else {
+            return handleServerAppError(res.data, thunkAPI.dispatch)
+        }
     } catch (error) {
         handleServerNetworkError(error, thunkAPI.dispatch)
         return thunkAPI.rejectWithValue(null)
@@ -69,10 +74,7 @@ export type TodolistDomainType = TodolistType & {
 
 const slice = createSlice({
     name: "todolist",
-    initialState: [
-        // {id: todolistId1, title: "What to learn", filter: "all", order: 0, addedDate: ""},
-        // {id: todolistId2, title: "What to buy", filter: "all", order: 0, addedDate: ""},
-    ] as Array<TodolistDomainType>,
+    initialState: [] as Array<TodolistDomainType>,
     reducers: {
         changeTodolistFilterAC(state, action: PayloadAction<{ filter: FilterValueType, todolistId: string }>) {
             const index = state.findIndex(t => t.id === action.payload.todolistId)
@@ -84,22 +86,25 @@ const slice = createSlice({
         }
     },
     extraReducers: builder => {
-        builder.addCase(fetchTodolistsTC.fulfilled, (state, action) => {
-            return action.payload.todolist.map(tl => ({...tl, filter: "all", entityStatus: "idle"}))
-        })
-        builder.addCase(removeTodolistTC.fulfilled, (state, action) => {
-            const index = state.findIndex(t => t.id === action.payload.todolistId)
-            if (index > -1) {
-                state.splice(index, 1)
-            }
-        })
-        builder.addCase(addTodolistTC.fulfilled, (state, action) => {
-            state.unshift({...action.payload.todolist, filter: "all", entityStatus: "idle"})
-        })
-        builder.addCase(changeTodolistTitleTC.fulfilled, (state, action) => {
-            const index = state.findIndex(t => t.id === action.payload.todolistId)
-            state[index].title = action.payload.title
-        })
+        builder
+            .addCase(fetchTodolistsTC.fulfilled, (state, action) => {
+                return action.payload.todolist.map(tl => ({...tl, filter: "all", entityStatus: "idle"}))
+            })
+            .addCase(removeTodolistTC.fulfilled, (state, action) => {
+                const index = state.findIndex(t => t.id === action.payload.todolistId)
+                if (index > -1) {
+                    state.splice(index, 1)
+                }
+            })
+            .addCase(addTodolistTC.fulfilled, (state, action) => {
+                state.unshift({...action.payload.todolist, filter: "all", entityStatus: "idle"})
+            })
+            .addCase(changeTodolistTitleTC.fulfilled, (state, action) => {
+                // @ts-ignore
+                const index = state.findIndex(tl => tl.id === action.payload.todolistId)
+                // @ts-ignore
+                state[index].title = action.payload.title
+            })
     }
 })
 //Reducer

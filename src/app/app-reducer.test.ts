@@ -1,4 +1,4 @@
-import {appReducer, initialState, setAppErrorAC, setAppStatusAC} from "./app-reducer";
+import {appReducer, setAppErrorAC, setAppStatusAC} from "./app-reducer";
 
 // @ts-ignore
 let startState: initialState;

@@ -1,8 +1,8 @@
 import {fetchTasksTC, removeTasksTC, tasksReducer, addTaskTC, updateTaskTC} from './tasks-reducer';
 import {addTodolistTC, fetchTodolistsTC, removeTodolistTC, todolistId1} from "./todoLists-reducer";
-import {TaskPriorities, TaskStatuses} from "../../../api/todolists-a-p-i";
 import { TasksStateType } from './Task/Task';
 import {keys} from "@material-ui/core/styles/createBreakpoints";
+import { TaskStatuses, TaskPriorities } from '../../../api/Types';
 
 let startState: TasksStateType
 beforeEach(() => {

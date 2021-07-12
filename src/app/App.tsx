@@ -21,11 +21,11 @@ import {logOutTC} from "../features/Todolists/Authorization/authReducer";
 import {selectIsInitialized, selectStatus} from "./selectors";
 import {selectIsLoggedIn} from "../features/Todolists/Authorization/selectors";
 
-type AppWithReduxPropsType = {
+type PropsType = {
     demo?: boolean
 }
 
-const AppWithRedux = ({demo = false}: AppWithReduxPropsType) => {
+const App = ({demo = false}: PropsType) => {
 
     const status = useSelector(selectStatus)
     const isInitialized = useSelector(selectIsInitialized)
@@ -73,5 +73,4 @@ const AppWithRedux = ({demo = false}: AppWithReduxPropsType) => {
         </div>
     );
 }
-
-export default AppWithRedux;
+export default App;

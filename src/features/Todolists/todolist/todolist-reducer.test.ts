@@ -10,8 +10,8 @@ import {
     changeTodolistTitleTC
 } from './todoLists-reducer';
 import {v1} from 'uuid';
-import {TodolistType} from "../../../api/todolists-a-p-i";
 import {RequestStatusType} from "../../../app/app-reducer";
+import {TodolistType} from "../../../api/Types";
 
 let todolistId1: string
 let todolistId2: string
