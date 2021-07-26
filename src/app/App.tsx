@@ -26,20 +26,19 @@ type PropsType = {
 }
 
 const App = ({demo = false}: PropsType) => {
-
     const status = useSelector(selectStatus)
     const isInitialized = useSelector(selectIsInitialized)
     const isLoggedIn = useSelector(selectIsLoggedIn)
     const dispatch = useDispatch()
 
-    useEffect( () => {
+    useEffect(() => {
         dispatch(initializeAppTC())
-    },[])
+    }, [dispatch])
 
-    const logOutHandler = useCallback( () => {
+    const logOutHandler = useCallback(() => {
         dispatch(logOutTC());
-    },[])
-    
+    }, [dispatch])
+
     if (!isInitialized) {
         return <div
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
@@ -57,7 +56,7 @@ const App = ({demo = false}: PropsType) => {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    { isLoggedIn && <Button color="inherit" onClick={logOutHandler}>Log Out</Button> }
+                    {isLoggedIn && <Button color="inherit" onClick={logOutHandler}>Log Out</Button>}
                 </Toolbar>
             </AppBar>
             <Container fixed>
@@ -66,7 +65,7 @@ const App = ({demo = false}: PropsType) => {
                     <Route exact path={'/'} render={() => <TodolistsList demo={demo}/>}/>
                     <Route path={'/login'} render={() => <Login/>}/>
                     <Route path={'/404'} render={() => <h1 style={{textAlign: "center"}}>404.Page not found</h1>}/>
-                    <Redirect from={'*'} to={'/404'}/>
+                    <Redirect from={'*'} to={'/login'}/>
                 </Switch>
             </Container>
             <ErrorSnackbar/>
