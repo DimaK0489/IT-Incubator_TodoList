@@ -33,7 +33,7 @@ export const TodoList = React.memo(({demo = false, ...props}: TodoListProps) => 
         dispatch(fetchTasksTC(props.todolist.id))
     }, [])
 
-    const addTask = useCallback((title: string) => {
+    const addTodolist = useCallback((title: string) => {
         props.addTask(title, props.todolist.id)
     }, [props.addTask, props.todolist.id])
 
@@ -81,7 +81,7 @@ export const TodoList = React.memo(({demo = false, ...props}: TodoListProps) => 
                     <Delete/>
                 </IconButton>
             </h3>
-            <AddItemForm addItem={addTask} disabled={props.todolist.entityStatus === "loading"}/>
+            <AddItemForm addItem={addTodolist} disabled={props.todolist.entityStatus === "loading"}/>
             <ul style={{listStyle: "none", paddingLeft: "0"}}>{tasks}</ul>
             <div>
                 <Button
